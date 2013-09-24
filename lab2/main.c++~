@@ -20,7 +20,9 @@ int main(int argc, char *argv[])
    socklen_t fromlen;
    struct sockaddr_in server;
    struct sockaddr_in from;
+   char* close="close"; 
    char buf[1024];
+   memset(buf,0,1024); 
    sock=socket(AF_INET, SOCK_STREAM, 0);
    if (sock < 0) error("Opening socket");
    length = sizeof(server);
@@ -31,20 +33,19 @@ int main(int argc, char *argv[])
    if (bind(sock,(struct sockaddr *)&server,length)<0) 
        error("binding");
    fromlen = sizeof(struct sockaddr_in);
-   while(1){
-       listen(sock, 1);
-       client = accept(sock, (struct sockaddr *) &from, &fromlen);
-       if (client < 0) 
-           error("accept faled");
-       while (1) {
-           memset(buf,0,1024);
-           int s=read(client,buf,1024);
-           if(s==0)
-               break;  
-           write(client,buf,strlen(buf));
-       }
-   close(client);
+while(1){
+   listen(sock, 1);
+   client = accept(sock, (struct sockaddr *) &from, &fromlen);
+   if (client < 0) 
+        error("accept faled");
+   while (1) {
+      read(client,buf,1024);
+write(1,"123",3);
+
+       write(client,buf,strlen(buf));
+       memset(buf,0,1024);
    }
+}
    return 0;
  }
 
