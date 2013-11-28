@@ -154,6 +154,7 @@ int startTCPserver(uint port,char*name,FILE *f)
 						close(num);
 						FD_CLR(num, &writeset);continue;
 					}
+					sleep(1);
   				}     
 				long sek=filenum[num]*BUFSIZE; 
 				fseek(f,sek,SEEK_SET);
